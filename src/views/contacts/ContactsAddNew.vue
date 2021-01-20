@@ -1,35 +1,46 @@
 <template>
-  <form @submit.prevent="submitForm">
+  <form @submit.prevent="addContact">
     <Input
       label="Enter Name"
       :value="contact.name"
-      @update:value="setContactValue({ type: 'name', value: $event.target.value })"/>
+      @input="setContactValue({ type: 'name', value: $event.target.value })"/>
 
     <Input
       label="Enter Email"
       :value="contact.email"
-      @update:value="setContactValue({ type: 'email', value: $event.target.value })"/>
+      @input="setContactValue({ type: 'email', value: $event.target.value })"/>
 
     <Input
       label="Enter Phone"
       :value="contact.phone"
-      @update:value="setContactValue({ type: 'phone', value: $event.target.value })"/>
+      @input="setContactValue({ type: 'phone', value: $event.target.value })"/>
+    
+    <Submit value="Add Contact"/>
   </form>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
-import Input from '../../components/MInput.vue'
+import { useStore } from 'vuex'
+import { computed } from 'vue'
+import Input from '@/components/MInput.vue'
+import Submit from '@/components/MSubmit.vue'
 
 export default {
   name: 'AddNew',
-  components: { Input },
-  computed: mapState({
-    contact({ contacts }) { return contacts.inputtedContact}
-  }),
-  methods: mapActions({
-    setContactValue: 'contacts/setValue'
-  })
+  components: {
+    Input,
+    Submit
+  },
+  setup() {
+    const store = useStore()
+
+    return {
+      contact: computed(() => store.state.contacts.inputtedContact),
+      contacts: computed(() => store.state.contacts.contacts),
+      setContactValue: ({ type, value }) => store.dispatch('contacts/setValue', { type, value }, { root: true }),
+      addContact: () => store.dispatch('contacts/addContact', {}, { root: true })
+    }
+  }
 }
 </script>
 

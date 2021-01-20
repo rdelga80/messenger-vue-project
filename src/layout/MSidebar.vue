@@ -7,7 +7,7 @@
 <script>
 import { computed } from 'vue'
 import { useStore } from 'vuex'
-import SideBarItem from '../components/SidebarItem.vue'
+import SideBarItem from '@/components/SidebarItem.vue'
 
 export default {
   name: 'Sidebar',

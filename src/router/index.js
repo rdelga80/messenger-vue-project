@@ -1,8 +1,8 @@
 import { createWebHistory, createRouter } from 'vue-router'
 
-const Home = () => import('../views/Home.vue')
-const Contacts = () => import('../views/contacts/ContactsIndex.vue')
-const ContactsAddNew = () => import('../views/contacts/ContactsAddNew.vue')
+const Home = () => import('@/views/Home.vue')
+const Contacts = () => import('@/views/contacts/ContactsIndex.vue')
+const ContactsAddNew = () => import('@/views/contacts/ContactsAddNew.vue')
 
 const routes = [
   {

@@ -12,7 +12,8 @@
       :name="name"
       :type="type"
       @focus="focused = true"
-      @blur="focused = false"/>
+      @blur="focused = false"
+      @input="$emit('input', $event)"/>
   </div>
 </template>
 

@@ -6,7 +6,7 @@ const path = require('path')
  */
 export default {
   alias: {
-    '/@/': path.resolve(__dirname, './src')
+    '@': path.resolve(__dirname, './src')
   },
   plugins: [vue()],
 }
