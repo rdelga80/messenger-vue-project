@@ -1,5 +1,3 @@
-import _cloneDeep from 'lodash/cloneDeep'
-
 const defaultState = {
   contacts: [],
   inputtedContact: {
@@ -9,7 +7,7 @@ const defaultState = {
   }
 }
 
-export const state = () => cloneDeep(defaultState)
+export const state = () => ({ ...defaultState })
 
 export const actions = {
   addContact({ commit, dispatch }) {
@@ -36,7 +34,7 @@ export const mutations = {
     state.contacts.push(state.inputtedContact)
   },
   RESET_INPUTTED_CONTACT(state) {
-    state.inputtedContact = cloneDeep(defaultState.inputtedContact)
+    state.inputtedContact = { ...defaultState.inputtedContact }
   },
   RESET_STATE(state) {
     defaultState.forEach((stateItem, key) => {
