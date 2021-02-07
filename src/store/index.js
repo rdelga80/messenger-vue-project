@@ -4,7 +4,7 @@ import * as loadingStore from './module/loading'
 import * as sidebarStore from './module/sidebar'
 import * as inputStore from './module/components/input'
 import loadingStatus from './loadingStatus'
-import { actions, handleActionsPlugin } from './handleActions'
+import { actions } from './handleActions'
 
 const setModule = (module) => {
   return {
@@ -27,7 +27,6 @@ const store = createStore({
     sidebar: setModule(sidebarStore)
   },
   plugins: [
-    handleActionsPlugin,
     loadingStatus
   ]
 })

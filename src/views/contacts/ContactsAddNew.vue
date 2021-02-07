@@ -1,38 +1,49 @@
 <template>
   <form @submit.prevent="addContact">
     <Input
+      ref="name"
       label="Enter Name"
       :value="contact.name"
       @input="setContactValue({ type: 'name', value: $event.target.value })"/>
 
-    <Input
-      label="Enter Email"
-      :value="contact.email"
-      @input="setContactValue({ type: 'email', value: $event.target.value })"/>
+    <button type="button" @click="getId">
+      Id
+    </button>
+    <!-- <Input -->
+      <!-- label="Enter Email" -->
+      <!-- :value="contact.email" -->
+      <!-- @input="setContactValue({ type: 'email', value: $event.target.value })"/> -->
 
-    <Input
-      label="Enter Phone"
-      :value="contact.phone"
-      @input="setContactValue({ type: 'phone', value: $event.target.value })"/>
+    <!-- <Input -->
+      <!-- label="Enter Phone" -->
+      <!-- :value="contact.phone" -->
+      <!-- @input="setContactValue({ type: 'phone', value: $event.target.value })"/> -->
     
-    <Submit value="Add Contact"/>
+    <!-- <Submit value="Add Contact"/> -->
   </form>
 </template>
 
 <script>
 import { useStore } from 'vuex'
-import { computed } from 'vue'
-// import Input from '@/components/MInput.vue'
+import { computed, ref } from 'vue'
+import Input from '@/components/MInput.vue'
 // import Submit from '@/components/MSubmit.vue'
 
 export default {
   name: 'AddNew',
   components: {
-    // Input,
+    Input
     // Submit
+  },
+  methods: {
+    getId() {
+      console.log(this.$refs.name.id())
+    }
   },
   setup() {
     const store = useStore()
+    const name = ref(null)
+
 
     return {
       contact: computed(() => store.state.contacts.inputtedContact),

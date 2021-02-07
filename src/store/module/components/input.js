@@ -33,8 +33,6 @@ export const mutations = {
     each(defaultState, (value, key) => {
       state[uid][key] = value
     })
-
-    console.log(state)
   },
   SET_VALUE(state, { type, value, uid }) {
     state[uid][type] = value
