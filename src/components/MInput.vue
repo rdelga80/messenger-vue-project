@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { computed, getCurrentInstance, onMounted } from 'vue'
+import { computed, getCurrentInstance, onMounted, reactive, ref, watchEffect } from 'vue'
 import { useStore } from 'vuex'
 import { modularAction } from '@/assets/js/storeHelpers'
 
@@ -27,38 +27,53 @@ export default {
   },
   setup(props) {
     const store = useStore()
-    let uid,
-        thisState
+    let uid = ref(''),
+        thisState = reactive({
+          focused: '',
+          name: '',
+          label: '',
+          value: '',
+          type: ''
+        })
+
+    watchEffect(uid, thisState)
     
     onMounted(() => {
-      uid = `input-${getCurrentInstance().uid}`
+      uid.value = `input-${getCurrentInstance().uid}`
 
       store.dispatch(
         'components/input/initializeState',
-        uid,
+        uid.value,
         { root: true }
       )
 
       modularAction({
         action: 'components/input/setValue',
         args: { type: 'label', value: props.label },
-        uid
+        uid: uid.value
       })
     })
 
-    return {
-      focused: computed(() => thisState?.focused || ''),
-      id: () => { return uid },
-      label: computed(() => thisState?.label || ''),
-      name: computed(() => thisState?.name || ''),
-      type: computed(() => thisState?.type || ''),
-      value: computed(() => thisState?.value || ''),
-      thisState: computed(() => store.getters['components/input/getThisState'](uid)),
-      setValue: value => modularAction({
+    thisState = computed(() => store.getters['components/input/getThisState'](uid.value))
+    const setValue = value => store.dispatch(
+      'handleActions',
+      {
         action: 'components/input/setValue',
         args: { type: 'value', value },
-        uid
-      })
+        uid: uid.value
+      }
+    )
+
+    return {
+      focused: computed(() => thisState?.value?.focused || ''),
+      id: () => { return uid.value },
+      label: computed(() => thisState?.value?.label || 'Label'),
+      name: computed(() => thisState?.value?.name || ''),
+      thisState,
+      type: computed(() => thisState?.value?.type || ''),
+      value: computed(() => thisState?.value?.value || ''),
+      setValue,
+      uid
     }
   }
 }

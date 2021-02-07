@@ -1,7 +1,9 @@
 import { useStore } from 'vuex'
 
-export const modularAction = ({ action, args, uid }) => (
-  useStore().dispatch(
+export const modularAction = ({ action, args, uid }) => {
+  const store = useStore()
+
+  store.dispatch(
     'handleActions',
     {
       action,
@@ -9,4 +11,4 @@ export const modularAction = ({ action, args, uid }) => (
       uid
     }
   )
-)
+}

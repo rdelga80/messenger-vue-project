@@ -3,7 +3,7 @@ import { each } from 'lodash'
 
 const defaultState = {
   focused: false,
-  name: 'test',
+  name: '',
   label: '',
   value: '',
   type: 'text'
