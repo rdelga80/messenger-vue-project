@@ -22,14 +22,14 @@
 <script>
 import { useStore } from 'vuex'
 import { computed } from 'vue'
-import Input from '@/components/MInput.vue'
-import Submit from '@/components/MSubmit.vue'
+// import Input from '@/components/MInput.vue'
+// import Submit from '@/components/MSubmit.vue'
 
 export default {
   name: 'AddNew',
   components: {
-    Input,
-    Submit
+    // Input,
+    // Submit
   },
   setup() {
     const store = useStore()

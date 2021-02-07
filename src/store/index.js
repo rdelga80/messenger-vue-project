@@ -2,7 +2,9 @@ import { createStore } from 'vuex'
 import * as contactsStore from './module/contacts'
 import * as loadingStore from './module/loading'
 import * as sidebarStore from './module/sidebar'
+import * as inputStore from './module/components/input'
 import loadingStatus from './loadingStatus'
+import { actions, handleActionsPlugin } from './handleActions'
 
 const setModule = (module) => {
   return {
@@ -12,12 +14,22 @@ const setModule = (module) => {
 }
 
 const store = createStore({
+  actions: actions,
   modules: {
+    components: {
+      namespaced: true,
+      modules: {
+        input: setModule(inputStore)
+      }
+    },
     contacts: setModule(contactsStore),
     loading: setModule(loadingStore),
     sidebar: setModule(sidebarStore)
   },
-  plugins: [loadingStatus]
+  plugins: [
+    handleActionsPlugin,
+    loadingStatus
+  ]
 })
 
 export default store;

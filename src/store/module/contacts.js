@@ -1,3 +1,5 @@
+import { cloneDeep } from 'lodash'
+
 const defaultState = {
   contacts: [],
   inputtedContact: {
@@ -7,12 +9,11 @@ const defaultState = {
   }
 }
 
-export const state = () => ({ ...defaultState })
+export const state = () => cloneDeep(defaultState)
 
 export const actions = {
   addContact({ commit, dispatch }) {
     setTimeout(() => {
-      console.log('contact')
       commit('ADD_CONTACT')
 
       dispatch('resetInputtedContact')
@@ -34,7 +35,7 @@ export const mutations = {
     state.contacts.push(state.inputtedContact)
   },
   RESET_INPUTTED_CONTACT(state) {
-    state.inputtedContact = { ...defaultState.inputtedContact }
+    state.inputtedContact = cloneDeep(defaultState.inputtedContact)
   },
   RESET_STATE(state) {
     defaultState.forEach((stateItem, key) => {

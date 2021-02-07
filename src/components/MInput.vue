@@ -7,39 +7,57 @@
     </label>
 
     <input
-      v-model="value"
       class="input-field"
+      :value="value"
       :name="name"
       :type="type"
-      @focus="focused = true"
-      @blur="focused = false"
-      @input="$emit('input', $event)"/>
+      @input="setValue($event.target.value)"/>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue'
+import { computed, getCurrentInstance, onMount } from 'vue'
+import { useStore } from 'vuex'
+import { handleActions } from '@/store/handleActions'
 
 export default {
   name: 'MInput',
   props: {
-    name: String,
-    label: {
-      type: String,
-      required: true
-    },
-    type: {
-      type: String,
-      default: 'text',
-      validator: v => ['text', 'date', 'search', 'tel', 'url', 'number'].includes(v)
-    },
-    value: [String, Number, Date]
+    // componentRef: {
+    //   type: String,
+    //   required: true
+    // }
   },
   setup(props) {
-    let focused = ref(false)
+    const store = useStore()
+    let uid,
+        thisState
+    
+    onMount(() => {
+      uid = `input-${getCurrentInstance().uid}`
+      store.dispatch(
+        'components/input/initializeState',
+        uid,
+        { root: true }
+      )
+    })
 
     return {
-      focused
+      focused: thisState?.focued || '',
+      id: () => uid,
+      label: thisState?.label || '',
+      name: thisState?.name || '',
+      type: thisState?.type || '',
+      value: thisState?.value || '',
+      // thisState: computed(() => store.getters['components/input/getThisState'](uid)),
+      setValue: value => store.dispatch(
+        'handleActions',
+        {
+          action: 'components/input/setValue',
+          args: { type: 'value', value }
+        },
+        uid
+      )
     }
   }
 }
