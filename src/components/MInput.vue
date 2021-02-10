@@ -11,71 +11,27 @@
       :value="value"
       :name="name"
       :type="type"
-      @input="setValue($event.target.value)"/>
+      @input="$emit('input', $event.target.value)"/>
   </div>
 </template>
 
 <script>
-import { computed, getCurrentInstance, onMounted, reactive, ref, watchEffect } from 'vue'
-import { useStore } from 'vuex'
-import { modularAction } from '@/assets/js/storeHelpers'
-
 export default {
   name: 'MInput',
+
   props: {
-    label: String
+    label: String,
+    name: {
+      type: String
+    },
+    type: {
+      type: String,
+      default: 'text'
+    },
+    value: [String, Number, Date]
   },
-  setup(props) {
-    const store = useStore()
-    let uid = ref(''),
-        thisState = reactive({
-          focused: '',
-          name: '',
-          label: '',
-          value: '',
-          type: ''
-        })
 
-    watchEffect(uid, thisState)
-    
-    onMounted(() => {
-      uid.value = `input-${getCurrentInstance().uid}`
-
-      store.dispatch(
-        'components/input/initializeState',
-        uid.value,
-        { root: true }
-      )
-
-      modularAction({
-        action: 'components/input/setValue',
-        args: { type: 'label', value: props.label },
-        uid: uid.value
-      })
-    })
-
-    thisState = computed(() => store.getters['components/input/getThisState'](uid.value))
-    const setValue = value => store.dispatch(
-      'handleActions',
-      {
-        action: 'components/input/setValue',
-        args: { type: 'value', value },
-        uid: uid.value
-      }
-    )
-
-    return {
-      focused: computed(() => thisState?.value?.focused || ''),
-      id: () => { return uid.value },
-      label: computed(() => thisState?.value?.label || 'Label'),
-      name: computed(() => thisState?.value?.name || ''),
-      thisState,
-      type: computed(() => thisState?.value?.type || ''),
-      value: computed(() => thisState?.value?.value || ''),
-      setValue,
-      uid
-    }
-  }
+  emits: ['input']
 }
 </script>
 

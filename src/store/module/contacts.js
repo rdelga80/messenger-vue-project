@@ -1,7 +1,13 @@
-import { cloneDeep } from 'lodash'
+import { cloneDeep, each } from 'lodash'
 
 const defaultState = {
-  contacts: [],
+  contacts: [
+    {
+      name: 'test',
+      email: 'test@test.com',
+      phone: '123-456-7890'
+    }
+  ],
   inputtedContact: {
     name: undefined,
     email: undefined,
@@ -39,7 +45,7 @@ export const mutations = {
   },
   RESET_STATE(state) {
     defaultState.forEach((stateItem, key) => {
-      Vue.set(state, key, stateItem) 
+      state[key] = stateItem
     })
   },
   SET_VALUE(state, { type, value }) {

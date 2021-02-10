@@ -18,6 +18,9 @@ export const getters = {
 }
 
 export const actions = {
+  clearState({ commit }, uid) {
+    commit(`CLEAR_STATE`)
+  },
   initializeState({ commit }, uid) {
     commit('INITIALIZE_STATE', uid)
   },
@@ -27,6 +30,9 @@ export const actions = {
 }
 
 export const mutations = {
+  CLEAR_STATE(state, uid) {
+    state[uid] = cloneDeep(defaultState)
+  },
   INITIALIZE_STATE(state, uid) {
     state[uid] = {}
 
