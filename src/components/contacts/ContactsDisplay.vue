@@ -4,17 +4,17 @@
       v-for="(contact, index) in contacts"
       class="contact">
       <div class="actions">
-        <MButton
+        <Button
           icon
           @click="deleteContact(contact)">
-          <MIcon icon="delete"/>
-        </MButton>
+          <Icon icon="delete"/>
+        </Button>
 
-        <MButton
+        <Button
           icon
           @click="editContact(contact, index)">
-          <MIcon icon="edit"/>
-        </MButton>
+          <Icon icon="edit"/>
+        </Button>
       </div>
 
       <div v-for="section in sections">
@@ -27,15 +27,15 @@
 <script>
 import { computed } from 'vue'
 import { useStore } from 'vuex'
-import MButton from '@/components/MButton.vue'
-import MIcon from '@/components/MIcon.vue'
+import Button from '@/components/MButton.vue'
+import Icon from '@/components/MIcon.vue'
 
 export default {
   name: 'ContactsDisplay',
 
   components: {
-    MButton,
-    MIcon
+    Button,
+    Icon
   },
 
   setup() {

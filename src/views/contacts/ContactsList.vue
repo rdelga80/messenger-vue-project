@@ -1,9 +1,5 @@
 <template>
-  <h1>
-    Contacts
-  </h1>
-
-  <router-view/>
+  Contacts List
 </template>
 
 <script>
@@ -13,7 +9,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.page {
-  padding: 5px;
+* {
+  opacity: 1;
 }
 </style>

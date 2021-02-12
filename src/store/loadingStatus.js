@@ -3,8 +3,7 @@ export default (store) => {
     if (type === 'contacts/addContact') {
       store.dispatch(
         'loading/setStatus',
-        { type: 'addContact', value: true },
-        { root: true }
+        { type: 'addContact', status: true }
       )
     }
   })
@@ -13,8 +12,7 @@ export default (store) => {
     if (type === 'contacts/ADD_CONTACT') {
       store.dispatch(
         'loading/setStatus',
-        { type: 'addContact', value: false },
-        { root: true }
+        { type: 'addContact', status: false }
       )
     }
   })

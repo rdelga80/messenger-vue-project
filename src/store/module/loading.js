@@ -1,8 +1,10 @@
+import { cloneDeep } from "lodash"
+
 const defaultState = {
   addContact: false
 }
 
-export const state = () => ({ ...defaultState })
+export const state = () => ({ ...cloneDeep(defaultState) })
 
 export const actions = {
   setStatus({ commit }, { type, status }) {

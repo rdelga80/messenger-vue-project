@@ -20,7 +20,11 @@
           :value="contact.phone"
           @input="setContactValue({ type: 'phone', value: $event })"/>
         
-        <Submit :value="isEditing ? 'Save Contact' : 'Add Contact'"/>
+        {{ loadingContact }}
+
+        <Submit
+          loading
+          :value="isEditing ? 'Save Contact' : 'Add Contact'"/>
       </form>
     </section>
 
@@ -33,6 +37,7 @@ import { computed, onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
 import ContactsDisplay from '@/components/contacts/ContactsDisplay.vue'
 import Input from '@/components/MInput.vue'
+import Icon from '@/components/MIcon.vue'
 import Submit from '@/components/MSubmit.vue'
 
 export default {
@@ -40,6 +45,7 @@ export default {
 
   components: {
     ContactsDisplay,
+    Icon,
     Input,
     Submit
   },
@@ -63,6 +69,7 @@ export default {
       contact: computed(() => store.state.contacts.inputtedContact),
       contacts: computed(() => store.state.contacts.contacts),
       isEditing: computed(() => store.getters['contacts/isEditing']),
+      loadingContact: computed(() => store.state.loading.addContact),
       email,
       name,
       phone,

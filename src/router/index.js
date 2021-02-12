@@ -3,6 +3,7 @@ import { createWebHistory, createRouter } from 'vue-router'
 const Home = () => import('@/views/Home.vue')
 const Contacts = () => import('@/views/contacts/ContactsIndex.vue')
 const ContactsAddNew = () => import('@/views/contacts/ContactsAddNew.vue')
+const ContactsList = () => import('@/views/contacts/ContactsList.vue')
 
 const routes = [
   {
@@ -16,7 +17,12 @@ const routes = [
     component: Contacts,
     children: [
       {
-        path: 'add-contact',
+        path: 'list',
+        name: 'List',
+        component: ContactsList
+      },
+      {
+        path: 'add',
         name: 'AddNew',
         component: ContactsAddNew
       }

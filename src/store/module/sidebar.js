@@ -12,8 +12,8 @@ const defaultState = {
         },
         {
           title: 'Add New',
-          key: 'add-contact',
-          route: '/contacts/add-contact',
+          key: 'add',
+          route: '/contacts/add',
         }
       ]
     },
@@ -29,8 +29,8 @@ const defaultState = {
         },
         {
           title: 'New Message',
-          key: 'new-message',
-          route: '/messages/new-message',
+          key: 'new',
+          route: '/messages/new',
         }
       ]
     }

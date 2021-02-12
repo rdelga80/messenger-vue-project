@@ -13,3 +13,9 @@
 body {
   background-color: rgb(216, 216, 216);
 }
+
+h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0.75rem 0;
+}
