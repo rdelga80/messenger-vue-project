@@ -5,6 +5,11 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --main-green: rgba(19, 73, 94, 0.5);
+  --main-green-bg: rgba(19, 73, 94, 0.4);
+}
+
 body {
   background-color: rgb(216, 216, 216);
 }

@@ -22,10 +22,16 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .m-submit {
+  background-color: var(--main-green-bg);
+  border: 2px solid var(--main-green);
+  border-radius: 4px;
   margin: 0.25rem 0.5rem;
   padding: 0.5rem;
-  background-color: rgb(8, 51, 92) 
+
+  &:focus {
+    outline: none;
+  }
 }
 </style>

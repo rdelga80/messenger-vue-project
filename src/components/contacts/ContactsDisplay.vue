@@ -1,32 +1,62 @@
 <template>
-  <article
-    v-for="contact in contacts"
-    class="contacts-display">
+  <article class="contacts-display">
     <section
-      v-for="section in sections"
-      :class="['contact', section]">
-      <slot
-        :name="section"
-        :contact="contact">
+      v-for="(contact, index) in contacts"
+      class="contact">
+      <div class="actions">
+        <MButton
+          icon
+          @click="deleteContact(contact)">
+          <MIcon icon="delete"/>
+        </MButton>
+
+        <MButton
+          icon
+          @click="editContact(contact, index)">
+          <MIcon icon="edit"/>
+        </MButton>
+      </div>
+
+      <div v-for="section in sections">
         {{ contact[section] }}
-      </slot>
+      </div>
     </section>
   </article>
 </template>
 
 <script>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+import MButton from '@/components/MButton.vue'
+import MIcon from '@/components/MIcon.vue'
+
 export default {
   name: 'ContactsDisplay',
-  props: {
-    contacts: {
-      type: Object,
-      required: true
-    }
+
+  components: {
+    MButton,
+    MIcon
   },
 
-  setup(props) {
+  setup() {
+    const store = useStore()
+
     return {
-      sections: ['actions', 'name', 'email', 'phone']
+      contacts: computed(() => store.state.contacts.contacts),
+      deleteContact: (contact) => store.dispatch(
+        'contacts/deleteContact',
+        contact
+      ),
+      editContact: (contact, index) => {
+        store.dispatch(
+          'contacts/editContact',
+          {
+            contact,
+            index
+          }
+        )
+      },
+      sections: ['name', 'email', 'phone']
     }
   }
 }
@@ -34,26 +64,36 @@ export default {
 
 <style lang="scss" scoped>
 .contacts-display {
-  border: 2px solid white;
   display: flex;
+  flex-direction: column;
   max-width: 600px;
+  row-gap: 5px;
+  width: 100%;
+}
+
+.contact {
+  align-items: center;
+  background-color: rgba(white, 0.4);
+  box-shadow: 2px 2px rgba(black, 0.1);
+  border: 2px solid rgba(19, 73, 94, 0.5);
+  display: flex;
+  color: slategray;
   padding: 5px;
   width: 100%;
 
-  .actions {
-    flex: 0 1 auto;
-    display: flex;
-    column-gap: 5px;
-  }
-
   > * {
-    align-items: center;
-    display: flex;
     flex: 1;
     padding: {
       left: 5px;
       right: 5px;
     }
   }
+}
+
+.actions {
+  color: rgba(19, 73, 94, 0.5);
+  column-gap: 5px;
+  display: flex;
+  justify-content: center;
 }
 </style>

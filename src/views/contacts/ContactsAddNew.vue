@@ -20,32 +20,19 @@
           :value="contact.phone"
           @input="setContactValue({ type: 'phone', value: $event })"/>
         
-        <Submit value="Add Contact"/>
+        <Submit :value="isEditing ? 'Save Contact' : 'Add Contact'"/>
       </form>
     </section>
 
-    <section class="display">
-      <ContactsDisplay :contacts="contacts">
-        <template #actions>
-          <MButton>
-            X
-          </MButton>
-
-          <MButton>
-            O
-          </MButton>
-        </template>
-      </ContactsDisplay>
-    </section>
+    <ContactsDisplay/>
   </article>
 </template>
 
 <script>
+import { computed, onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
-import { computed, ref } from 'vue'
 import ContactsDisplay from '@/components/contacts/ContactsDisplay.vue'
 import Input from '@/components/MInput.vue'
-import MButton from '@/components/MButton.vue'
 import Submit from '@/components/MSubmit.vue'
 
 export default {
@@ -54,7 +41,6 @@ export default {
   components: {
     ContactsDisplay,
     Input,
-    MButton,
     Submit
   },
 
@@ -64,6 +50,10 @@ export default {
           phone = ref(null),
           store = useStore()
 
+    onMounted(() => {
+      name.value.focus()
+    })
+
     return {
       addContact: () => store.dispatch(
         'contacts/addContact',
@@ -72,6 +62,7 @@ export default {
       ),
       contact: computed(() => store.state.contacts.inputtedContact),
       contacts: computed(() => store.state.contacts.contacts),
+      isEditing: computed(() => store.getters['contacts/isEditing']),
       email,
       name,
       phone,
@@ -83,10 +74,21 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .add-new {
   display: grid;
   grid-template-columns: minmax(200px, 25%) auto;
   column-gap: 2rem;
+}
+
+.form {
+  background-color: rgba(white, 0.4);
+  border: 2px solid var(--main-green);
+  box-shadow: 2px 2px rgba(black, 0.1);
+  color: var(--main-green);
+}
+
+:deep input {
+  color: var(--main-green-bg);
 }
 </style>

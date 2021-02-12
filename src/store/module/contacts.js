@@ -1,4 +1,4 @@
-import { cloneDeep, each } from 'lodash'
+import { cloneDeep, difference, each, isUndefined } from 'lodash'
 
 const defaultState = {
   contacts: [
@@ -8,6 +8,7 @@ const defaultState = {
       phone: '123-456-7890'
     }
   ],
+  editing: undefined,
   inputtedContact: {
     name: undefined,
     email: undefined,
@@ -17,6 +18,10 @@ const defaultState = {
 
 export const state = () => cloneDeep(defaultState)
 
+export const getters = {
+  isEditing: (state) => !isUndefined(state.editing)
+}
+
 export const actions = {
   addContact({ commit, dispatch }) {
     setTimeout(() => {
@@ -24,6 +29,12 @@ export const actions = {
 
       dispatch('resetInputtedContact')
     }, 2000)
+  },
+  deleteContact({ commit }, contact) {
+    commit('DELETE_CONTACT', contact)
+  },
+  editContact({ commit }, { contact, index }) {
+    commit('EDIT_CONTACT', { contact, index })
   },
   resetInputtedContact({ commit }) {
     commit('RESET_INPUTTED_CONTACT')
@@ -38,7 +49,25 @@ export const actions = {
 
 export const mutations = {
   ADD_CONTACT(state) {
-    state.contacts.push(state.inputtedContact)
+    if (!isUndefined(state.editing)) {
+      each(state.inputtedContact, (value, key) => {
+        state.contacts[state.editing][key] = value
+      })
+
+      state.editing = undefined
+    } else {
+      state.contacts.push(state.inputtedContact)
+    }
+  },
+  DELETE_CONTACT(state, contact) {
+    state.contacts = difference(state.contacts, [contact])
+  },
+  EDIT_CONTACT(state, { contact, index }) {
+    each(contact, (value, key) => {
+      state.inputtedContact[key] = value
+    })
+
+    state.editing = index
   },
   RESET_INPUTTED_CONTACT(state) {
     state.inputtedContact = cloneDeep(defaultState.inputtedContact)

@@ -6,12 +6,13 @@ export default {
   props: {
     bgColor: {
       type: String,
-      default: `rgba(19, 73, 94, 0.4)`
+      default: `var(--main-green-bg)`
     },
     borderColor: {
       type: String,
-      default: `rgba(19, 73, 94, 0.5)`
-    }
+      default: `var(--main-green)`
+    },
+    icon: Boolean
   },
 
   setup(props, { slots }) {
@@ -20,10 +21,12 @@ export default {
       '--btn-border-color': props.borderColor
     }))
 
+    const buttonClasses = props.icon ? ['button', 'button-icon'] : ['button']
+
     return () => h(
       'button',
       {
-        class: ['button'],
+        class: buttonClasses,
         style: [buttonStyles.value]
       },
       slots.default()
@@ -33,10 +36,24 @@ export default {
 </script>
 
 <style lang="scss">
-button.button {
-  padding: 4px 12px;
+%button-vars {
+  --padding-y: 4px;
+}
+
+.button-icon {
+  --padding-y: 8px;
+}
+
+.button {
+  @extend %button-vars;
+
+  padding: var(--padding-y) 12px;
   border: 2px solid var(--btn-border-color);
   border-radius: 5px;
   background-color: var(--btn-bg-color);
+
+  &:focus {
+    outline: none;
+  }
 }
 </style>

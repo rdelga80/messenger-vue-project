@@ -1,13 +1,14 @@
 <template>
   <div class="input p-2 flex flex-col w-auto max-w-sm">
     <label
-      class="label"
+      class="label font-bold"
       :for="name">
       {{ label }}
     </label>
 
     <input
       class="input-field"
+      ref="input"
       :value="value"
       :name="name"
       :type="type"
@@ -16,6 +17,8 @@
 </template>
 
 <script>
+import { onMounted, ref } from 'vue'
+
 export default {
   name: 'MInput',
 
@@ -31,17 +34,30 @@ export default {
     value: [String, Number, Date]
   },
 
-  emits: ['input']
+  emits: ['input'],
+
+  setup(props) {
+    const input = ref('')
+
+    return {
+      input,
+      focus: () => { input.value.focus() }
+    }
+  }
 }
 </script>
 
-<style scoped>
-input.input-field {
-  background-color: transparent;
-  border-bottom: 1px solid white;
+<style lang="scss" scoped>
+label {
+  font-weight: 700;
 }
 
-input.input-field:focus {
-  outline: none;
+input.input-field {
+  background-color: transparent;
+  border-bottom: 1px solid var(--main-green);
+
+  &:focus {
+    outline: none;
+  }
 }
 </style>
