@@ -1,23 +1,46 @@
 <script>
-import { h } from 'vue'
+import { h, resolveComponent } from 'vue'
+import Icon from '@/components/MIcon.vue'
 
 export default {
   name: 'MSubmit',
+
+  components: { Icon },
+
   props: {
+    loading: Boolean,
     value: {
       type: String,
       required: true
     }
   },
-  render() {
-    return h(
-      'input',
-      {
-        class: 'm-submit',
-        type: 'submit',
-        value: this.value
-      }
-    )
+
+  render(props) {
+    if (props.loading) {
+      const Icon = resolveComponent('Icon')
+
+      return h(
+        'div',
+        {
+          class: 'm-submit'
+        },
+        h(
+          Icon,
+          {
+            icon: 'loading'
+          }
+        )
+      )
+    } else {
+      return h(
+        'input',
+        {
+          class: 'm-submit',
+          type: 'submit',
+          value: this.value
+        }
+      )
+    }
   }
 }
 </script>
