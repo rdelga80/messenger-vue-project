@@ -6,6 +6,16 @@ const defaultState = {
       name: 'test',
       email: 'test@test.com',
       phone: '123-456-7890'
+    },
+    {
+      name: 'test2',
+      email: 'test@test.com',
+      phone: '123-456-7890'
+    },
+    {
+      name: 'test3',
+      email: 'test@test.com',
+      phone: '123-456-7890'
     }
   ],
   editing: undefined,

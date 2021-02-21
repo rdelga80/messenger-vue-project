@@ -1,10 +1,23 @@
 <template>
-  Contacts List
+  <ContactCards :contacts="contacts"/>
 </template>
 
 <script>
-export default {
+import { useStore } from 'vuex'
+import ContactCards from '@/components/contacts/ContactCards.vue'
 
+export default {
+  name: 'ContactsList',
+
+  components: { ContactCards },
+
+  setup() {
+    const store = useStore()
+
+    return {
+      contacts: store.state.contacts.contacts
+    }
+  }
 }
 </script>
 
